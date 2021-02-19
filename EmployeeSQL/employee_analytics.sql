@@ -1,3 +1,8 @@
+-- Begin Data Engineering Section
+
+-- create tables and corresponding keys
+
+
 -- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
 -- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
 
@@ -12,14 +17,12 @@ CREATE TABLE "departments" (
 
 -- select * from "departments"
 
-
 CREATE TABLE "dept_emp" (
     "emp_no" int   NOT NULL,
     "dept_no" varchar(30)   NOT NULL
 );
 
 -- select * from "dept_emp"
-
 
 CREATE TABLE "dept_manager" (
     "dept_no" varchar(30)   NOT NULL,
@@ -29,10 +32,9 @@ CREATE TABLE "dept_manager" (
 -- select * from "dept_manager"
 
 
-
 CREATE TABLE "employees" (
     "emp_no" int   NOT NULL,
-    "emp_title" varchar(30)   NOT NULL,
+    "emp_title_id" varchar(30)   NOT NULL,
     "birth_date" varchar(30)   NOT NULL,
     "first_name" varchar(30)   NOT NULL,
     "last_name" varchar(30)   NOT NULL,
@@ -45,12 +47,10 @@ CREATE TABLE "employees" (
 
 -- select * from "employees"
 
-
 CREATE TABLE "salaries" (
     "emp_no" int   NOT NULL,
     "salary" int   NOT NULL
 );
-
 
 -- select * from "salaries"
 
@@ -78,9 +78,43 @@ REFERENCES "departments" ("dept_no");
 ALTER TABLE "dept_manager" ADD CONSTRAINT "fk_dept_manager_emp_no" FOREIGN KEY("emp_no")
 REFERENCES "employees" ("emp_no");
 
-ALTER TABLE "employees" ADD CONSTRAINT "fk_employees_emp_title" FOREIGN KEY("emp_title")
+ALTER TABLE "employees" ADD CONSTRAINT "fk_employees_emp_title_id" FOREIGN KEY("emp_title_id")
 REFERENCES "titles" ("title_id");
 
 ALTER TABLE "salaries" ADD CONSTRAINT "fk_salaries_emp_no" FOREIGN KEY("emp_no")
 REFERENCES "employees" ("emp_no");
 
+
+-- End table generation
+
+
+-- Begin Data Analysis section
+
+-- List the following details of each employee: employee number, last name, first name, sex, and salary.
+select "employees".emp_no, "employees".last_name, "employees".first.name, "employees".sex, "salaries".salary
+from "employees"
+left join "salaries"
+on emp_no
+
+-- List first name, last name, and hire date for employees who were hired in 1986.
+
+
+-- List the manager of each department with the following information: department number, department name, the manager's employee number, last name, first name.
+
+
+-- List the department of each employee with the following information: employee number, last name, first name, and department name.
+
+
+-- List first name, last name, and sex for employees whose first name is "Hercules" and last names begin with "B."
+select * from "employees"
+where first_name = 'Hercules' and last_name like 'B%'
+
+-- List all employees in the Sales department, including their employee number, last name, first name, and department name.
+-- sales dept is coded as d007
+select * from "employees"
+where 
+
+-- List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
+
+
+-- In descending order, list the frequency count of employee last names, i.e., how many employees share each last name
